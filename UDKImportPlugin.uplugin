@@ -3,7 +3,7 @@
 	"Version": 2,
 	"VersionName": "2.0.0",
 	"FriendlyName": "UDK Import Plugin",
-	"Description": "Automatic importation of Map and related assets from UDK to Unreal Engine 4.27-5.6+. Based on code by Vincent (Speedy37) Rouille.",
+	"Description": "Automatic importation of Map and related assets from UDK to Unreal Engine 4.27-5.6+.
 	"Category": "Import",
 	"CreatedBy": "AlleyKatPr0",
 	"CreatedByURL": "https://github.com/AlleyKatPr0",
