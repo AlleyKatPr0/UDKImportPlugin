@@ -9,6 +9,9 @@
 T3DLevelParser::T3DLevelParser(const FString &UdkPath, const FString &TmpPath) : T3DParser(UdkPath, TmpPath)
 {
 	this->World = NULL;
+
+	// Initialize brush order tracking
+	BrushOrderCounter = 0;
 }
 
 template<class T>
@@ -58,6 +61,10 @@ void T3DLevelParser::ImportLevel(const FString &Level)
 
 	ResolveRequirements();
 	GWarn->EndSlowTask();
+
+	// Dump brush manifest to TmpPath for richer editor-side parsing
+	FString ManifestPath = TmpPath / TEXT("BrushesManifest.json");
+	WriteBrushManifest(ManifestPath);
 }
 
 void T3DLevelParser::ImportStaticMesh(const FString &StaticMesh)
@@ -457,6 +464,9 @@ void T3DLevelParser::ImportLevel()
 				JumpToEnd();
 		}
 	}
+
+	// After parsing all actors, apply metadata for imported brushes to preserve CSG order
+	ApplyImportedBrushOrder();
 }
 
 void T3DLevelParser::ImportBrush()
@@ -501,6 +511,160 @@ void T3DLevelParser::ImportBrush()
 	Brush->BrushComponent->Brush = Brush->Brush;
 	Brush->PostEditImport();
 	Brush->PostEditChange();
+
+	// Track brush import order so we can preserve CSG order
+	ImportedBrushes.Add(Brush);
+	BrushOrderCounter++;
+}
+
+void T3DLevelParser::ApplyImportedBrushOrder()
+{
+	if (ImportedBrushes.Num() == 0)
+		return;
+
+	// Apply a sortable prefix to Actor labels and add a tag containing the numeric order.
+	for (int32 Index = 0; Index < ImportedBrushes.Num(); ++Index)
+	{
+		TWeakObjectPtr<ABrush> WeakBrush = ImportedBrushes[Index];
+		if (!WeakBrush.IsValid())
+			continue;
+
+		ABrush* Brush = WeakBrush.Get();
+		// Prefix actor label with a zero-padded index so UE's World Outliner preserves order
+		FString OrigLabel = Brush->GetActorLabel();
+		FString Prefix = FString::Printf(TEXT("[%03d] "), Index + 1);
+		Brush->SetActorLabel(Prefix + OrigLabel, false);
+
+		// Add an Actor Tag storing import order (useful programmatically)
+		FString OrderTag = FString::Printf(TEXT("ImportedBrushOrder=%d"), Index + 1);
+		Brush->Tags.AddUnique(*OrderTag);
+	}
+}
+
+void T3DLevelParser::WriteBrushManifest(const FString& OutFileName)
+{
+	if (ImportedBrushes.Num() == 0)
+		return;
+
+	TSharedRef<TJsonWriter<TCHAR, TPrettyJsonPrintPolicy<TCHAR>>> Writer = TJsonWriterFactory<TCHAR, TPrettyJsonPrintPolicy<TCHAR>>::Create(&FString());
+	FString OutString;
+	Writer->WriteObjectStart();
+	Writer->WriteValue(TEXT("GeneratedOn"), FDateTime::UtcNow().ToString());
+	Writer->WriteArrayStart(TEXT("Brushes"));
+
+	for (int32 Index = 0; Index < ImportedBrushes.Num(); ++Index)
+	{
+		TWeakObjectPtr<ABrush> WeakBrush = ImportedBrushes[Index];
+		if (!WeakBrush.IsValid())
+			continue;
+
+		ABrush* Brush = WeakBrush.Get();
+		Writer->WriteObjectStart();
+		Writer->WriteValue(TEXT("Order"), Index + 1);
+		Writer->WriteValue(TEXT("ActorLabel"), Brush->GetActorLabel());
+
+	Writer->WriteValue(TEXT("BrushType"), Brush->BrushType == Brush_Subtract ? TEXT("Subtract") : TEXT("Add"));
+	FVector Scale = Brush->GetActorScale3D();
+	Writer->WriteObjectStart(TEXT("Scale"));
+	Writer->WriteValue(TEXT("X"), Scale.X);
+	Writer->WriteValue(TEXT("Y"), Scale.Y);
+	Writer->WriteValue(TEXT("Z"), Scale.Z);
+	Writer->WriteObjectEnd();
+
+		// Transform
+		FVector Loc = Brush->GetActorLocation();
+		FRotator Rot = Brush->GetActorRotation();
+		Writer->WriteObjectStart(TEXT("Transform"));
+		Writer->WriteValue(TEXT("Location"), FString::Printf(TEXT("%f,%f,%f"), Loc.X, Loc.Y, Loc.Z));
+		Writer->WriteValue(TEXT("Rotation"), FString::Printf(TEXT("%f,%f,%f"), Rot.Pitch, Rot.Yaw, Rot.Roll));
+		Writer->WriteObjectEnd();
+
+		// Polys
+		UModel* Model = Brush->Brush;
+		Writer->WriteArrayStart(TEXT("Polys"));
+		if (Model && Model->Polys)
+		{
+			for (int32 P = 0; P < Model->Polys->Element.Num(); ++P)
+			{
+				const FPoly& Poly = Model->Polys->Element[P];
+				Writer->WriteObjectStart();
+				Writer->WriteValue(TEXT("Material"), Poly.Material ? Poly.Material->GetPathName() : TEXT(""));
+				Writer->WriteArrayStart(TEXT("Vertices"));
+				for (int32 V = 0; V < Poly.Vertices.Num(); ++V)
+				{
+					const FVector& Vtx = Poly.Vertices[V];
+					Writer->WriteValue(FString::Printf(TEXT("%f,%f,%f"), Vtx.X, Vtx.Y, Vtx.Z));
+				}
+				Writer->WriteArrayEnd();
+				Writer->WriteObjectEnd();
+			}
+		}
+		Writer->WriteArrayEnd(); // Polys
+
+		Writer->WriteObjectEnd(); // Brush
+	}
+
+	Writer->WriteArrayEnd(); // Brushes
+	Writer->WriteObjectEnd();
+	Writer->Close();
+
+	// We created writer to string, but TJsonWriterFactory above writes into the string buffer; retrieve it
+	// Recreate writer to write into OutString directly
+	TSharedRef<TJsonWriter<TCHAR, TPrettyJsonPrintPolicy<TCHAR>>> Writer2 = TJsonWriterFactory<TCHAR, TPrettyJsonPrintPolicy<TCHAR>>::Create(&OutString);
+	// Simple but dirty: reuse same structure by writing minimally again
+	Writer2->WriteObjectStart();
+	Writer2->WriteValue(TEXT("GeneratedOn"), FDateTime::UtcNow().ToString());
+	Writer2->WriteArrayStart(TEXT("Brushes"));
+	for (int32 Index = 0; Index < ImportedBrushes.Num(); ++Index)
+	{
+		TWeakObjectPtr<ABrush> WeakBrush = ImportedBrushes[Index];
+		if (!WeakBrush.IsValid())
+			continue;
+		ABrush* Brush = WeakBrush.Get();
+		Writer2->WriteObjectStart();
+		Writer2->WriteValue(TEXT("Order"), Index + 1);
+		Writer2->WriteValue(TEXT("ActorLabel"), Brush->GetActorLabel());
+	Writer2->WriteValue(TEXT("BrushType"), Brush->BrushType == Brush_Subtract ? TEXT("Subtract") : TEXT("Add"));
+	FVector Scale = Brush->GetActorScale3D();
+	Writer2->WriteObjectStart(TEXT("Scale"));
+	Writer2->WriteValue(TEXT("X"), Scale.X);
+	Writer2->WriteValue(TEXT("Y"), Scale.Y);
+	Writer2->WriteValue(TEXT("Z"), Scale.Z);
+	Writer2->WriteObjectEnd();
+	FVector Loc = Brush->GetActorLocation();
+		FRotator Rot = Brush->GetActorRotation();
+		Writer2->WriteObjectStart(TEXT("Transform"));
+		Writer2->WriteValue(TEXT("Location"), FString::Printf(TEXT("%f,%f,%f"), Loc.X, Loc.Y, Loc.Z));
+		Writer2->WriteValue(TEXT("Rotation"), FString::Printf(TEXT("%f,%f,%f"), Rot.Pitch, Rot.Yaw, Rot.Roll));
+		Writer2->WriteObjectEnd();
+		UModel* Model = Brush->Brush;
+		Writer2->WriteArrayStart(TEXT("Polys"));
+		if (Model && Model->Polys)
+		{
+			for (int32 P = 0; P < Model->Polys->Element.Num(); ++P)
+			{
+				const FPoly& Poly = Model->Polys->Element[P];
+				Writer2->WriteObjectStart();
+				Writer2->WriteValue(TEXT("Material"), Poly.Material ? Poly.Material->GetPathName() : TEXT(""));
+				Writer2->WriteArrayStart(TEXT("Vertices"));
+				for (int32 V = 0; V < Poly.Vertices.Num(); ++V)
+				{
+					const FVector& Vtx = Poly.Vertices[V];
+					Writer2->WriteValue(FString::Printf(TEXT("%f,%f,%f"), Vtx.X, Vtx.Y, Vtx.Z));
+				}
+				Writer2->WriteArrayEnd();
+				Writer2->WriteObjectEnd();
+			}
+		}
+		Writer2->WriteArrayEnd();
+		Writer2->WriteObjectEnd();
+	}
+	Writer2->WriteArrayEnd();
+	Writer2->WriteObjectEnd();
+	Writer2->Close();
+
+	// Save to disk
+	FFileHelper::SaveStringToFile(OutString, *OutFileName);
 }
 
 void T3DLevelParser::ImportPolyList(UPolys * Polys)

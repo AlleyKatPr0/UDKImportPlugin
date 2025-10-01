@@ -1,20 +1,32 @@
 {
-    "FileVersion" : 3,
-	
-	"FriendlyName" : "UDK Import Plugin",
-	"Version" : 1,
-	"VersionName" : "1.0",
-	"CreatedBy" : "Vincent (Speedy37) Rouille",
-	"CreatedByURL" : "http://speedy37.fr",
-	"EngineVersion" : 1579795,
-	"Description" : "Automatic importation of Map and related assets from UDK.",
-	"Category" : "Import",
-	
-    "Modules" :
-	[
+	"FileVersion": 3,
+	"Version": 2,
+	"VersionName": "2.0.0",
+	"FriendlyName": "UDK Import Plugin",
+	"Description": "Automatic importation of Map and related assets from UDK to Unreal Engine 4.27-5.6+. Based on code by Vincent (Speedy37) Rouille.",
+	"Category": "Import",
+	"CreatedBy": "AlleyKatPr0",
+	"CreatedByURL": "https://github.com/AlleyKatPr0",
+	"BasedOnWorkBy": "Vincent (Speedy37) Rouille",
+	"OriginalCodeURL": "http://speedy37.fr",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"EngineVersion": "4.27.0",
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
 		{
-			"Name" : "UDKImportPlugin",
-			"Type" : "Developer"
+			"Name": "UDKImportPlugin",
+			"Type": "Editor",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64",
+				"Mac",
+				"Linux"
+			]
 		}
 	]
 }

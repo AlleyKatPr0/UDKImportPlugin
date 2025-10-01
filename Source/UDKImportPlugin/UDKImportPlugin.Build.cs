@@ -1,30 +1,58 @@
 using UnrealBuildTool;
 using System.IO;
  
-namespace UnrealBuildTool.Rules
+public class UDKImportPlugin : ModuleRules
 {
-	public class UDKImportPlugin : ModuleRules
+	public UDKImportPlugin(ReadOnlyTargetRules Target) : base(Target)
 	{
-        public UDKImportPlugin(TargetInfo Target)
+		// PCH usage for compatibility with UE5
+		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		
+		// Faster compilation with unity builds
+		bUseUnity = true;
+
+		PublicDependencyModuleNames.AddRange(
+			new string[] {
+				"Core",
+				"CoreUObject",
+				"Engine",
+				"InputCore",
+				"Slate",
+				"SlateCore"
+			}
+		);
+		
+		PrivateDependencyModuleNames.AddRange(
+			new string[] {
+				"UnrealEd",
+				"LevelEditor",
+				"AssetTools",
+				"EditorSubsystem",
+				"Projects",
+				"ToolMenus",
+				"EditorFramework",
+				"PropertyEditor",
+				"DesktopPlatform",
+				"ContentBrowser"
+			}
+		);
+
+		// Conditional module dependencies for different engine versions
+		if (Target.Version.MajorVersion == 5)
 		{
-			PublicDependencyModuleNames.AddRange(
-				new string[] {
-					"Core",
-					"Engine",
-					"UnrealEd",
-					"CoreUObject",		// @todo Mac: for some reason CoreUObject and Engine are needed to link in debug on Mac
-                    "InputCore",
-					"SlateCore",
-					"Slate"
-				}
-			);
-			
+			// UE5-specific modules
 			PrivateDependencyModuleNames.AddRange(
 				new string[] {
-					"EditorStyle",
-					"Projects",
-					"LevelEditor",
-					"AssetTools",
+					"EditorStyle"
+				}
+			);
+		}
+		else
+		{
+			// UE4-specific modules
+			PrivateDependencyModuleNames.AddRange(
+				new string[] {
+					"EditorStyle"
 				}
 			);
 		}

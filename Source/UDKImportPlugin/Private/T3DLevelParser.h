@@ -59,6 +59,12 @@ private:
 	void ImportSpotLight();
 	USoundCue * ImportSoundCue();
 
+	/** After parsing, apply import-time metadata for brushes (labels/tags) so CSG order can be reconstructed */
+	void ApplyImportedBrushOrder();
+
+	/** Write a JSON manifest describing imported brushes (rich metadata) */
+	void WriteBrushManifest(const FString& OutFileName);
+
 	/// Available ressource actions
 	void SetStaticMesh(UObject * Object, UStaticMeshComponent * StaticMeshComponent);
 	void SetPolygonTexture(UObject * Object, UPolys * Polys, int32 index);
@@ -68,4 +74,11 @@ private:
 	void SetTexture(UObject * Object, UMaterialExpressionTextureBase * MaterialExpression);
 	void SetParent(UObject * Object, UMaterialInstanceConstant * MaterialInstanceConstant);
 	void SetTextureParameterValue(UObject * Object, UMaterialInstanceConstant * MaterialInstanceConstant, int32 ParameterIndex);
+
+private:
+	/** Counter to track brush creation order during parsing */
+	int32 BrushOrderCounter;
+
+	/** Brushes created during import recorded in parse order */
+	TArray<TWeakObjectPtr<ABrush>> ImportedBrushes;
 };

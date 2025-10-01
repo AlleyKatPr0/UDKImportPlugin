@@ -1,5 +1,15 @@
 #include "UDKImportPluginPrivatePCH.h"
 #include "SUDKImportScreen.h"
+#include "ToolMenus.h"
+
+// Version-specific style access
+#if ENGINE_MAJOR_VERSION >= 5
+	#define STYLE_SET_NAME FAppStyle::GetAppStyleSetName()
+	#define GET_BRUSH(name) FAppStyle::GetBrush(name)
+#else
+	#define STYLE_SET_NAME FEditorStyle::GetStyleSetName()
+	#define GET_BRUSH(name) FEditorStyle::GetBrush(name)
+#endif
 
 #define LOCTEXT_NAMESPACE "UDKImportPlugin"
 
@@ -11,16 +21,13 @@ private:
 	virtual void ShutdownModule() override;
 
 	/** Add the menu extension for summoning the UDK Import tools */
-	void AddSummonUDKImportMenuExtension(FMenuBuilder& MenuBuilder);
+	void RegisterMenus();
 
 	/** Summon UDK Import page to front */
 	void SummonUDKImport();
 
 	/** ID name for the plugins editor major tab */
 	static const FName UDKImportPluginTabName;
-
-	/** The extender to pass to the level editor to extend it's window menu */
-	TSharedPtr<FExtender> MainMenuExtender;
 };
 
 IMPLEMENT_MODULE(FUDKImportPlugin, UDKImportPlugin)
@@ -32,23 +39,29 @@ void FUDKImportPlugin::StartupModule()
 	// This code can run with content commandlets. Slate is not initialized with commandlets and the below code will fail.
 	if (!IsRunningCommandlet())
 	{
-		// Add menu option for UDK import
-		MainMenuExtender = MakeShareable(new FExtender);
-		MainMenuExtender->AddMenuExtension("HelpBrowse", EExtensionHook::After, NULL, FMenuExtensionDelegate::CreateRaw(this, &FUDKImportPlugin::AddSummonUDKImportMenuExtension));
-		FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
-		LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MainMenuExtender);
+		// Register menus after editor is initialized
+		UToolMenus::RegisterStartupCallback(FSimpleMulticastDelegate::FDelegate::CreateRaw(this, &FUDKImportPlugin::RegisterMenus));
 	}
 }
 
-void FUDKImportPlugin::AddSummonUDKImportMenuExtension(FMenuBuilder& MenuBuilder)
+void FUDKImportPlugin::RegisterMenus()
 {
-	MenuBuilder.BeginSection("UDKImport", LOCTEXT("UDKImportLabel", "UDK Import"));
-	MenuBuilder.AddMenuEntry(
-		LOCTEXT("UDKImportMenuEntryTitle", "UDK Import"),
-		LOCTEXT("UDKImportMenuEntryToolTip", "Opens up a tool for importing UDK maps."),
-		FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tutorials"),
-		FUIAction(FExecuteAction::CreateRaw(this, &FUDKImportPlugin::SummonUDKImport)));
-	MenuBuilder.EndSection();
+	// Owner for cleanup
+	FToolMenuOwnerScoped OwnerScoped(this);
+
+	// Add menu entry to Help menu
+	UToolMenu* Menu = UToolMenus::Get()->ExtendMenu("LevelEditor.MainMenu.Help");
+	if (Menu)
+	{
+		FToolMenuSection& Section = Menu->FindOrAddSection("HelpBrowse");
+		Section.AddMenuEntry(
+			"UDKImport",
+			LOCTEXT("UDKImportMenuEntryTitle", "UDK Import"),
+			LOCTEXT("UDKImportMenuEntryToolTip", "Opens up a tool for importing UDK maps."),
+			FSlateIcon(STYLE_SET_NAME, "LevelEditor.Tutorials"),
+			FUIAction(FExecuteAction::CreateRaw(this, &FUDKImportPlugin::SummonUDKImport))
+		);
+	}
 }
 
 void FUDKImportPlugin::SummonUDKImport()
@@ -70,8 +83,14 @@ void FUDKImportPlugin::SummonUDKImport()
 
 void FUDKImportPlugin::ShutdownModule()
 {
+	// Unregister menus
+	UToolMenus::UnRegisterStartupCallback(this);
+	UToolMenus::UnregisterOwner(this);
+
 	// Unregister the tab spawner
 	FGlobalTabmanager::Get()->UnregisterTabSpawner(UDKImportPluginTabName);
 }
 
 #undef LOCTEXT_NAMESPACE
+#undef STYLE_SET_NAME
+#undef GET_BRUSH

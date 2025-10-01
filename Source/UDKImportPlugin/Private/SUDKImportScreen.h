@@ -44,6 +44,9 @@ public:
 	/** Widget constructor */
 	void Construct(const FArguments& Args);
 
+	/** Run the verification checks against the UDK path */
+	FReply OnVerify();
+
 protected:
 	/** Run the import tool */
 	FReply OnRun();
@@ -70,4 +73,7 @@ protected:
 	TArray<TSharedPtr<EUDKImportMode::Type>> ExportTypeOptionsSource;
 
 	EUDKImportMode::Type ExportMode;
+
+	/** Verification status widget */
+	TSharedPtr<class STextBlock> SVerifyStatus;
 };

@@ -1,6 +1,7 @@
 #include "UDKImportPluginPrivatePCH.h"
 #include "SUDKImportScreen.h"
 #include "T3DLevelParser.h"
+#include "UDKImportPlugin/Public/UDKInstallVerifier.h"
 
 #define LOCTEXT_NAMESPACE "UDKImportScreen"
 
@@ -64,7 +65,7 @@ SUDKImportScreen::~SUDKImportScreen()
 }
 
 void SUDKImportScreen::Construct(const FArguments& Args)
-{	
+{    
 	ChildSlot
 	[
 		SNew(SHorizontalBox)
@@ -108,6 +109,10 @@ void SUDKImportScreen::Construct(const FArguments& Args)
 			.FillHeight(1.0f)
 			.Padding(2.0f)
 			.VAlign(VAlign_Center)
+			[
+				SNew(STextBlock)
+				.Text(LOCTEXT("", ""))
+			]
 		]
 		+ SHorizontalBox::Slot()
 		.FillWidth(2.0f)
@@ -140,7 +145,7 @@ void SUDKImportScreen::Construct(const FArguments& Args)
 			[
 				SAssignNew(SLevel, SEditableTextBox)
 				.Text(FText::FromString(TEXT("MyPackage.MyRessouce")))
-				.ToolTipText(LOCTEXT("MyPackage.MyRessouce", "Reference to the ressource or package (eg: MyLevel or MyPackage.MyRessource)"))
+				.ToolTipText(LOCTEXT("MyPackage.MyRessouce", "Reference to the ressource or package (eg: MyLevel or MyPackage.MyRessouce)"))
 			]
 			+ SVerticalBox::Slot()
 			.FillHeight(1.0f)
@@ -154,11 +159,34 @@ void SUDKImportScreen::Construct(const FArguments& Args)
 			.FillHeight(1.0f)
 			.Padding(2.0f)
 			[
-				SNew(SButton)
-				.HAlign(HAlign_Center)
-				.VAlign(VAlign_Center)
-				.Text(LOCTEXT("Run", "Run"))
-				.OnClicked(this, &SUDKImportScreen::OnRun)
+				SNew(SHorizontalBox)
+				+ SHorizontalBox::Slot()
+				.AutoWidth()
+				.Padding(2.0f)
+				[
+					SNew(SButton)
+					.HAlign(HAlign_Center)
+					.VAlign(VAlign_Center)
+					.Text(LOCTEXT("Run", "Run"))
+					.OnClicked(this, &SUDKImportScreen::OnRun)
+				]
+				+ SHorizontalBox::Slot()
+				.AutoWidth()
+				.Padding(2.0f)
+				[
+					SNew(SButton)
+					.HAlign(HAlign_Center)
+					.VAlign(VAlign_Center)
+					.Text(LOCTEXT("Verify", "Verify"))
+					.OnClicked(this, &SUDKImportScreen::OnVerify)
+				]
+				+ SHorizontalBox::Slot()
+				.FillWidth(1.0f)
+				.Padding(4.0f)
+				[
+					SAssignNew(SVerifyStatus, STextBlock)
+					.Text(LOCTEXT("VerifyStatus_Empty", ""))
+				]
 			]
 		]
 	];
@@ -203,6 +231,88 @@ FReply SUDKImportScreen::OnRun()
 		break;
 	}
 	}
+
+	return FReply::Handled();
+}
+
+FReply SUDKImportScreen::OnVerify()
+{
+	if (!SUDKPath.IsValid() || !SVerifyStatus.IsValid())
+	{
+		return FReply::Handled();
+	}
+
+	const FString UdkPath = SUDKPath.Get()->GetText().ToString();
+
+	FUDKInstallCheckResult Result = FUDKInstallVerifier::VerifyUDKInstall(UdkPath);
+
+	FString Summary;
+	if (!Result.Errors.Num() && !Result.Warnings.Num())
+	{
+		Summary = TEXT("OK: UDK path looks valid.");
+	}
+	else
+	{
+		if (Result.Errors.Num())
+		{
+			Summary += TEXT("Errors:\n");
+			for (const FString& E : Result.Errors)
+			{
+				Summary += E + TEXT("\n");
+			}
+		}
+		if (Result.Warnings.Num())
+		{
+			Summary += TEXT("Warnings:\n");
+			for (const FString& W : Result.Warnings)
+			{
+				Summary += W + TEXT("\n");
+			}
+		}
+	}
+
+	SVerifyStatus->SetText(FText::FromString(Summary));
+
+	return FReply::Handled();
+}
+
+FReply SUDKImportScreen::OnVerify()
+{
+	const FString UdkPath = SUDKPath.Get()->GetText().ToString();
+	const FString TmpPath = STmpPath.Get()->GetText().ToString();
+	const FString Ressource = SLevel.Get()->GetText().ToString();
+
+	FString VerifyResult;
+
+	switch (ExportMode)
+	{
+	case EUDKImportMode::Map:
+	{
+		T3DLevelParser Parser(UdkPath, TmpPath);
+		VerifyResult = Parser.VerifyLevel(Ressource);
+		break;
+	}
+	case EUDKImportMode::StaticMesh:
+	{
+		T3DLevelParser Parser(UdkPath, TmpPath);
+		VerifyResult = Parser.VerifyStaticMesh(Ressource);
+		break;
+	}
+	case EUDKImportMode::Material:
+	{
+		T3DLevelParser Parser(UdkPath, TmpPath);
+		VerifyResult = Parser.VerifyMaterial(Ressource);
+		break;
+	}
+	case EUDKImportMode::MaterialInstanceConstant:
+	{
+		T3DLevelParser Parser(UdkPath, TmpPath);
+		VerifyResult = Parser.VerifyMaterialInstanceConstant(Ressource);
+		break;
+	}
+	}
+
+	SVerifyStatus->SetText(FText::FromString(VerifyResult));
 
 	return FReply::Handled();
 }

@@ -1,6 +1,6 @@
 #include "UDKImportPluginPrivatePCH.h"
 #include "T3DParser.h"
-#include "Editor/UnrealEd/Public/Layers/ILayers.h"
+#include "Layers/ILayers.h"
 
 DEFINE_LOG_CATEGORY(UDKImportPluginLog);
 
