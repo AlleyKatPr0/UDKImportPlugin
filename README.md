@@ -1,4 +1,4 @@
-UDK Import Plugin for Unreal Engine (4.27 — 5.6+)
+UDK Import Plugin for Unreal Engine (4.27 - 5.7+)
 =================================================
 
 UDKImportPlugin is an editor plugin that helps migrate maps and assets from the Unreal Development Kit (UDK) into Unreal Engine 4.27 up through UE5.6+. It focuses on practical, repeatable import workflows for static geometry, materials, textures, and lights while integrating enhanced UDK-side commandlets to produce useful export metadata.
@@ -6,7 +6,7 @@ UDKImportPlugin is an editor plugin that helps migrate maps and assets from the 
 Quick summary
 - Purpose: Migrate UDK maps and assets into UE4/UE5 projects.
 - Primary targets: Brushes, StaticMeshes, Materials, Textures, PointLights, SpotLights.
-- Supported engines: UE 4.27 — UE 5.6+ (modern API usage).
+- Supported engines: UE 4.27 - UE 5.6+ (modern API usage).
 - Platforms: Windows, macOS, Linux (editor must run on platform-specific supported builds).
 
 Key features
@@ -22,7 +22,7 @@ Known limitations
 - Some complex map constructs or custom UDK-only features may not import cleanly.
 
 Prerequisites
-- Unreal Engine 4.27 — 5.6+ project.
+- Unreal Engine 4.27 - 5.6+ project.
 - If you rely on automated OBJ→FBX conversion: Autodesk FBX Converter 2013 (32-bit).
 - UDK installation with Development/Make support to build commandlets (if you will use provided UDK commandlets).
 
@@ -71,7 +71,7 @@ Typical import workflow
    - Check filenames/paths against the log. If FBX fails, re-export from UDK or convert the OBJ with Autodesk FBX Converter and place the FBX beside the OBJ/metadata.
 
 Tips and best practices
-- Start the import into a new empty map — the plugin does not create a map automatically.
+- Start the import into a new empty map - the plugin does not create a map automatically.
 - Do not clear the ExportedMeshes temporary folder unless UDK packages change or the plugin is updated.
 - Save exported FBX files alongside OBJ/metadata to avoid repeated exports.
 - Use the UDK commandlets to validate and discover package contents before bulk export.
