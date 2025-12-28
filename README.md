@@ -6,7 +6,7 @@ UDKImportPlugin is an editor plugin that helps migrate maps and assets from the 
 Quick summary
 - Purpose: Migrate UDK maps and assets into UE4/UE5 projects.
 - Primary targets: Brushes, StaticMeshes, Materials, Textures, PointLights, SpotLights.
-- Supported engines: UE 4.27 - UE 5.6+ (modern API usage).
+- Supported engines: UE 4.27 - UE 5.7+ (modern API usage).
 - Platforms: Windows, macOS, Linux (editor must run on platform-specific supported builds).
 
 Key features
@@ -22,7 +22,7 @@ Known limitations
 - Some complex map constructs or custom UDK-only features may not import cleanly.
 
 Prerequisites
-- Unreal Engine 4.27 - 5.6+ project.
+- Unreal Engine 4.27 - 5.7+ project.
 - If you rely on automated OBJ→FBX conversion: Autodesk FBX Converter 2013 (32-bit).
 - UDK installation with Development/Make support to build commandlets (if you will use provided UDK commandlets).
 
