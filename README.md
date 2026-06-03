@@ -1,7 +1,7 @@
 UDK Import Plugin for Unreal Engine (4.27 - 5.7+)
 =================================================
 
-UDKImportPlugin is an editor plugin that helps migrate maps and assets from the Unreal Development Kit (UDK) into Unreal Engine 4.27 up through UE5.6+. It focuses on practical, repeatable import workflows for static geometry, materials, textures, and lights while integrating enhanced UDK-side commandlets to produce useful export metadata.
+UDKImportPlugin is an editor plugin that helps migrate maps and assets from the Unreal Development Kit (UDK) into Unreal Engine 4.27 up through UE5.7+. It focuses on practical, repeatable import workflows for static geometry, materials, textures, and lights while integrating enhanced UDK-side commandlets to produce useful export metadata.
 
 Quick summary
 - Purpose: Migrate UDK maps and assets into UE4/UE5 projects.
