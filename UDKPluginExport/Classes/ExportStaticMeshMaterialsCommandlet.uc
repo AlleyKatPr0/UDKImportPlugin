@@ -85,13 +85,17 @@ event int Main(string Params)
 		for (j = 0; j < SM.LODModels.Length; ++j)
 		{
 			`Log("  LOD[" $ j $ "].VERTICES:" @ SM.LODModels[j].NumVertices);
-			`Log("  LOD[" $ j $ "].TRIANGLES:" @ SM.LODModels[j].IndexBuffer.Indices.Length / 3);
+			`Log("  LOD[" $ j $ "].TRIANGLES:" @ (SM.LODModels[j].IndexBuffer.Indices.Length / 3));
 		}
 
 		// Export UV channel count (from LOD 0)
 		if (SM.LODModels.Length > 0)
 		{
 			`Log("  UV_CHANNELS:" @ SM.LODModels[0].VertexBuffer.NumTexCoords);
+		}
+		else
+		{
+			`Log("  UV_CHANNELS:" @ 0);
 		}
 
 		// Export collision information
@@ -100,6 +104,12 @@ event int Main(string Params)
 			`Log("  COLLISION.BOX_ELEMS:" @ SM.BodySetup.AggGeom.BoxElems.Length);
 			`Log("  COLLISION.SPHERE_ELEMS:" @ SM.BodySetup.AggGeom.SphereElems.Length);
 			`Log("  COLLISION.CONVEX_ELEMS:" @ SM.BodySetup.AggGeom.ConvexElems.Length);
+		}
+		else
+		{
+			`Log("  COLLISION.BOX_ELEMS:" @ 0);
+			`Log("  COLLISION.SPHERE_ELEMS:" @ 0);
+			`Log("  COLLISION.CONVEX_ELEMS:" @ 0);
 		}
 
 		`Log("MESH_END:" @ References[i]);

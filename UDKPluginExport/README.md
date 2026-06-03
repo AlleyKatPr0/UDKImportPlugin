@@ -218,7 +218,8 @@ UDK.exe BatchExportStaticMeshFBXCommandlet MyPackage.MyMesh C:/Export/MyMesh.fbx
 **Important Notes**:
 - ⚠️ UDK's built-in FBX exporter is **known to produce corrupt files**
 - This commandlet provides diagnostic information about **why** FBX export fails
-- **Recommendation**: Use manual export from UDK Content Browser for FBX
+- **Recommendation**: Use `NativeFBXExportCommandlet` for reliable automated FBX export
+- If you must export manually, use the UDK Content Browser FBX export (slow but reliable)
 - **Alternative**: Plugin auto-exports to OBJ format which works reliably
 
 **Why FBX export fails in UDK**:

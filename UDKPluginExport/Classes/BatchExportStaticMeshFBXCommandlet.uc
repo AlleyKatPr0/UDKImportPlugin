@@ -13,15 +13,25 @@
  */
 class BatchExportStaticMeshFBXCommandlet extends Commandlet;
 
+function string StripOuterQuotes(string Value)
+{
+	if (Len(Value) >= 2 && Left(Value, 1) == "\"" && Right(Value, 1) == "\"")
+	{
+		return Mid(Value, 1, Len(Value) - 2);
+	}
+
+	return Value;
+}
+
 event int Main(string Params)
 {
 	local array<string> Args;
 	local string MeshRef, OutputPath;
 	local StaticMesh SM;
-	local Object ExporterClass;
-	local Object Exporter;
+	local class<Exporter> ExporterClass;
+	local Exporter Exporter;
+	local StaticMeshComponent SMC;
 	local int i, SuccessCount, FailCount;
-	local bool bExportResult;
 
 	ParseStringIntoArray(Params, Args, " ", true);
 
@@ -35,30 +45,43 @@ event int Main(string Params)
 	`Log("==== BEGIN FBX BATCH EXPORT ====");
 
 	// Try to load the FBX exporter factory
-	ExporterClass = DynamicLoadObject("UnrealEd.StaticMeshExporterFBX", class'Class', true);
+	ExporterClass = class<Exporter>(DynamicLoadObject("UnrealEd.StaticMeshExporterFBX", class'Class', true));
 	
 	if (ExporterClass == None)
 	{
-		`Warn("Could not load FBX exporter class. FBX export may not be available in this UDK build.");
-		`Warn("Falling back to attempting direct file operations...");
+		`Warn("Could not load FBX exporter class (UnrealEd.StaticMeshExporterFBX).");
+		`Warn("FBX export is likely not available in this UDK build, or UnrealEd classes are not loaded.");
 	}
 	else
 	{
-		`Log("FBX Exporter loaded successfully");
+		`Log("FBX exporter class loaded:" @ string(ExporterClass));
+
+		// Instantiate exporter to verify it can be constructed (export API still isn't exposed to UnrealScript).
+		Exporter = new(None) ExporterClass;
+		if (Exporter == None)
+		{
+			`Warn("FBX exporter class loaded but could not be instantiated.");
+		}
+		else
+		{
+			`Log("FBX exporter instantiated successfully (UnrealScript cannot call ExportToFile).");
+		}
 	}
+
+	SMC = new (self) class'StaticMeshComponent';
 
 	// Process each mesh/path pair
 	for (i = 0; i < Args.Length; i += 2)
 	{
-		MeshRef = Args[i];
-		OutputPath = Args[i + 1];
+		MeshRef = StripOuterQuotes(Args[i]);
+		OutputPath = StripOuterQuotes(Args[i + 1]);
 
 		`Log("");
 		`Log("Processing:" @ MeshRef);
 		`Log("Output:" @ OutputPath);
 
 		// Load the StaticMesh
-		SM = StaticMesh(DynamicLoadObject(MeshRef, class'StaticMesh'));
+		SM = StaticMesh(DynamicLoadObject(MeshRef, class'StaticMesh', true));
 
 		if (SM == None)
 		{
@@ -67,32 +90,32 @@ event int Main(string Params)
 			continue;
 		}
 
+		if (Len(OutputPath) < 4 || Caps(Right(OutputPath, 4)) != ".FBX")
+		{
+			`Warn("  Output path does not end with .fbx (UDK expects FBX export targets):" @ OutputPath);
+		}
+
 		// Log mesh properties
-		`Log("  Vertices (LOD0):" @ SM.LODModels[0].NumVertices);
-		`Log("  Triangles (LOD0):" @ SM.LODModels[0].IndexBuffer.Indices.Length / 3);
-		`Log("  Materials:" @ SM.LODInfo.Length);
+		if (SM.LODModels.Length > 0)
+		{
+			`Log("  Vertices (LOD0):" @ SM.LODModels[0].NumVertices);
+			`Log("  Triangles (LOD0):" @ (SM.LODModels[0].IndexBuffer.Indices.Length / 3));
+			`Log("  UV Channels:" @ SM.LODModels[0].VertexBuffer.NumTexCoords);
+		}
+		else
+		{
+			`Warn("  StaticMesh has no LOD models; cannot report LOD0 stats.");
+		}
+
+		SMC.SetStaticMesh(SM);
+		`Log("  Material Slots:" @ SMC.GetNumElements());
 
 		// Attempt export
 		if (ExporterClass != None)
 		{
-			// Create exporter instance
-			Exporter = new(None) class<Exporter>(ExporterClass);
-			
-			if (Exporter != None)
-			{
-				// Note: This is the "ideal" way but may not work due to UDK bugs
-				`Log("Attempting FBX export via exporter...");
-				// bExportResult = Exporter.ExportToFile(SM, OutputPath);
-				
-				`Warn("Direct exporter API not available in UnrealScript");
-				`Warn("Please use the UE3 Content Browser export feature manually");
-				FailCount++;
-			}
-			else
-			{
-				`Warn("Failed to instantiate exporter");
-				FailCount++;
-			}
+			`Warn("FBX export API is not exposed to UnrealScript in UDK.");
+			`Warn("Use NativeFBXExportCommandlet (recommended) or export manually from the Content Browser.");
+			FailCount++;
 		}
 		else
 		{
