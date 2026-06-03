@@ -33,35 +33,17 @@ function string GetObjectPath(Object Obj)
 	return string(Obj.Class.Name) $ "'" $ Path $ "'";
 }
 
-function int CountReferences(Object Obj)
-{
-	local array<Object> RefObjects;
-	local int Count;
-
-	if (Obj == None)
-		return 0;
-
-	// Get all objects this object references
-	RefObjects.Length = 0;
-	// Note: GetObjectsReferencedBy is not available in UnrealScript
-	// This is a placeholder for the concept
-	
-	return RefObjects.Length;
-}
-
 event int Main(string Params)
 {
 	local array<string> PackageNames;
 	local Package Pkg;
-	local array<Object> AllObjects;
-	local Object Obj;
 	local StaticMesh SM;
 	local Material Mat;
 	local MaterialInstanceConstant MIC;
 	local Texture Tex;
 	local SoundCue Sound;
-	local int i, j;
-	local int StaticMeshCount, MaterialCount, MICCount, TextureCount, SoundCount, OtherCount;
+	local int i;
+	local int StaticMeshCount, MaterialCount, MICCount, TextureCount, SoundCount;
 
 	ParseStringIntoArray(Params, PackageNames, " ", true);
 
