@@ -95,7 +95,11 @@ UMaterial*  T3DMaterialParser::ImportMaterial()
 		}
 		else if (GetProperty(TEXT("SpecularPower="), Value))
 		{
-			// TODO
+			float SpecularPower = FCString::Atof(*Value);
+			if (SpecularPower > 0.0f)
+			{
+				Material->Roughness.Constant = FMath::Sqrt(2.0f / (SpecularPower + 2.0f));
+			}
 		}
 		else if (GetProperty(TEXT("Normal="), Value))
 		{

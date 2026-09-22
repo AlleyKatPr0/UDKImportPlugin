@@ -69,6 +69,7 @@ private:
 	void SetStaticMesh(UObject * Object, UStaticMeshComponent * StaticMeshComponent);
 	void SetPolygonTexture(UObject * Object, UPolys * Polys, int32 index);
 	void SetSoundCueFirstNode(UObject * Object, USoundCue * SoundCue);
+	void SetSoundCueSoundClass(UObject * Object, USoundCue * SoundCue);
 	void SetStaticMeshMaterial(UObject * Material, FString StaticMeshUrl, int32 MaterialIdx);
 	void SetStaticMeshMaterialResolved(UObject * Object, UObject * Material, int32 MaterialIdx);
 	void SetTexture(UObject * Object, UMaterialExpressionTextureBase * MaterialExpression);

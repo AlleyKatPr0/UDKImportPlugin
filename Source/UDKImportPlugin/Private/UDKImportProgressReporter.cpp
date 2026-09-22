@@ -22,21 +22,19 @@ void FUDKImportProgressReporterLog::LogError(const FText& Message)
 FUDKImportProgressReporterUI::FUDKImportProgressReporterUI()
 	: bCancelled(false)
 {
-	// TODO: Create progress dialog for UE5
-	// Can use SNotificationItem for non-modal feedback
+	GWarn->BeginSlowTask(LOCTEXT("UDKImportProgress", "Importing UDK content..."), true, false);
 }
 
 FUDKImportProgressReporterUI::~FUDKImportProgressReporterUI()
 {
-	// TODO: Close progress dialog
+	GWarn->EndSlowTask();
 }
 
 void FUDKImportProgressReporterUI::UpdateProgress(const FText& Message, float Progress)
 {
-	// Log to output as well
 	UE_LOG(LogUDKImportProgress, Log, TEXT("[%d%%] %s"), FMath::RoundToInt(Progress * 100.0f), *Message.ToString());
-	
-	// TODO: Update progress dialog
+	GWarn->StatusUpdate(FMath::RoundToInt(Progress * 100.0f), 100, Message);
+	bCancelled = GWarn->ReceivedUserCancel();
 }
 
 bool FUDKImportProgressReporterUI::IsCancelled() const
@@ -48,14 +46,12 @@ void FUDKImportProgressReporterUI::LogWarning(const FText& Message)
 {
 	UE_LOG(LogUDKImportProgress, Warning, TEXT("%s"), *Message.ToString());
 	Warnings.Add(Message);
-	
-	// TODO: Display in progress dialog
+	GWarn->Logf(ELogVerbosity::Warning, TEXT("%s"), *Message.ToString());
 }
 
 void FUDKImportProgressReporterUI::LogError(const FText& Message)
 {
 	UE_LOG(LogUDKImportProgress, Error, TEXT("%s"), *Message.ToString());
 	Errors.Add(Message);
-	
-	// TODO: Display in progress dialog
+	GWarn->Logf(ELogVerbosity::Error, TEXT("%s"), *Message.ToString());
 }
