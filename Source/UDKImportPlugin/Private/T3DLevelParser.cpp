@@ -877,7 +877,7 @@ USoundCue * T3DLevelParser::ImportSoundCue()
 	{
 		if (GetProperty(TEXT("SoundClass="), Value))
 		{
-			// TODO
+			AddRequirement(Value, UObjectDelegate::CreateRaw(this, &T3DLevelParser::SetSoundCueSoundClass, SoundCue));
 		}
 		else if (GetProperty(TEXT("FirstNode="), Value))
 		{
@@ -908,6 +908,11 @@ void T3DLevelParser::SetStaticMesh(UObject * Object, UStaticMeshComponent * Stat
 void T3DLevelParser::SetSoundCueFirstNode(UObject * Object, USoundCue * SoundCue)
 {
 	SoundCue->FirstNode = Cast<USoundNode>(Object);
+}
+
+void T3DLevelParser::SetSoundCueSoundClass(UObject * Object, USoundCue * SoundCue)
+{
+	SoundCue->SoundClassObject = Cast<USoundClass>(Object);
 }
 
 void T3DLevelParser::SetStaticMeshMaterial(UObject * Material, FString StaticMeshUrl, int32 MaterialIdx)

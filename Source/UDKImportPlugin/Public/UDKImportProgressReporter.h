@@ -50,8 +50,7 @@ public:
 };
 
 /**
- * Progress reporter with Slate UI feedback
- * TODO: Implement with progress dialog for UE5
+ * Progress reporter using the editor's slow-task dialog
  */
 class UDKIMPORTPLUGIN_API FUDKImportProgressReporterUI : public FUDKImportProgressReporter
 {
