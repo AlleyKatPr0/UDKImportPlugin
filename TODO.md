@@ -3,11 +3,11 @@
 Consolidated list of outstanding work items for the plugin, commandlets, and native FBX module.
 Sources: CHANGELOG.md roadmap, NATIVE_FBX_SOLUTION.md future enhancements, X64_IMPLEMENTATION_SUMMARY.md, and code review.
 
-Legend: 🔴 High priority · 🟡 Medium priority · 🔵 Low priority
+Items are grouped by priority: High, Medium, Low.
 
 ---
 
-## 🔴 High Priority
+## High Priority
 
 ### Plugin Core
 - [ ] **UI progress dialog with cancellation** — `FUDKImportProgressReporterUI` is declared (`Source/UDKImportPlugin/Public/UDKImportProgressReporter.h:55-70`) but not fully wired into the import flow; implement the editor slow-task dialog and hook cancellation into `T3DLevelParser`.
@@ -23,7 +23,7 @@ Legend: 🔴 High priority · 🟡 Medium priority · 🔵 Low priority
 
 ---
 
-## 🟡 Medium Priority
+## Medium Priority
 
 ### UE5 Features (placeholders already in settings)
 - [ ] **Nanite conversion option** — enable `bEnableNanite` setting (`EditCondition=false` currently disabled) and apply Nanite to imported StaticMeshes.
@@ -32,7 +32,7 @@ Legend: 🔴 High priority · 🟡 Medium priority · 🔵 Low priority
 ### Import Quality
 - [ ] **Material parameter mapping improvements** — better translation of complex UDK material graphs.
 - [ ] **Brush CSG order preservation** — investigate whether order can be recovered (currently lost; UDK T3D limitation documented in README).
-- [ ] **Automated OBJ→FBX conversion** — implement `bAutoConvertOBJToFBX` using the configured `FBXConverterPath` so the Autodesk FBX Converter step runs unattended.
+- [ ] **Automated OBJ->FBX conversion** — implement `bAutoConvertOBJToFBX` using the configured `FBXConverterPath` so the Autodesk FBX Converter step runs unattended.
 
 ### Native FBX Module / Commandlets
 - [ ] **Material/texture export alongside meshes** in `NativeFBXExportCommandlet`.
@@ -43,7 +43,7 @@ Legend: 🔴 High priority · 🟡 Medium priority · 🔵 Low priority
 
 ---
 
-## 🔵 Low Priority
+## Low Priority
 
 ### Testing & Infrastructure
 - [ ] **Unit tests for parsers** — T3DParser, T3DLevelParser, T3DMaterialParser, T3DMaterialInstanceConstantParser.
@@ -53,7 +53,7 @@ Legend: 🔴 High priority · 🟡 Medium priority · 🔵 Low priority
 ### Extended Migration Scope
 - [ ] **Blueprint migration support**.
 - [ ] **Level scripting (Kismet) migration**.
-- [ ] **Particle system migration** (Cascade → Niagara).
+- [ ] **Particle system migration** (Cascade -> Niagara).
 
 ---
 

@@ -167,11 +167,11 @@ PACKAGE SUMMARY:
 
 ---
 
-### 4. NativeFBXExportCommandlet (New - Native C++ Solution) ⭐
+### 4. NativeFBXExportCommandlet (New - Native C++ Solution)
 
 **Purpose**: **Reliable automated FBX export** using native C++ DLL that directly accesses UDK's FBX exporter.
 
-**Status**: ✅ **WORKING** - Produces valid FBX files programmatically
+**Status**: **WORKING** - Produces valid FBX files programmatically
 
 **Location**: `Native/FBXExportModule/` (requires building C++ DLL)
 
@@ -186,11 +186,11 @@ UDK.exe NativeFBXExportCommandlet MyPackage.MyMesh D:/Export/MyMesh.fbx
 ```
 
 **Advantages**:
-- ✅ Direct access to native FBX export API
-- ✅ Produces valid binary FBX files
-- ✅ No UDK FBX export bugs
-- ✅ Batch processing support
-- ✅ Detailed progress logging
+- Direct access to native FBX export API
+- Produces valid binary FBX files
+- No UDK FBX export bugs
+- Batch processing support
+- Detailed progress logging
 
 **Setup Required**:
 1. Build the native C++ DLL (see `Native/FBXExportModule/README.md`)
@@ -216,7 +216,7 @@ UDK.exe BatchExportStaticMeshFBXCommandlet MyPackage.MyMesh C:/Export/MyMesh.fbx
 ```
 
 **Important Notes**:
-- ⚠️ UDK's built-in FBX exporter is **known to produce corrupt files**
+- WARNING: UDK's built-in FBX exporter is **known to produce corrupt files**
 - This commandlet provides diagnostic information about **why** FBX export fails
 - **Recommendation**: Use `NativeFBXExportCommandlet` for reliable automated FBX export
 - If you must export manually, use the UDK Content Browser FBX export (slow but reliable)
@@ -310,6 +310,6 @@ To add new commandlets:
 
 ## Credits
 
-Based on the original work by Vincent (Speedy37) Rouille  
-Enhanced and expanded by AlleyKatPr0  
+Based on the original work by Vincent (Speedy37) Rouille
+Enhanced and expanded by AlleyKatPr0
 https://github.com/AlleyKatPr0/UDKImportPlugin
