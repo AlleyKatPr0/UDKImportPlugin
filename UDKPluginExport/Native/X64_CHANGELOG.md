@@ -1,4 +1,4 @@
-# ✅ 64-bit Support Added!
+# 64-bit Support Added!
 
 ## What Changed
 
@@ -48,16 +48,16 @@ cd D:\UDK\Custom\Development\Src\UDKPluginExport\Native\FBXExportModule
 Test-Path "D:\UDK\Custom\Binaries\Win64"
 ```
 
-- **False** → Standard UDK (32-bit only) - use `Build.bat`
-- **True** → You have 64-bit support - use `Build_Both.bat`
+- **False** -> Standard UDK (32-bit only) - use `Build.bat`
+- **True** -> You have 64-bit support - use `Build_Both.bat`
 
 ### Standard UDK vs Custom UDK
 
 | UDK Type | Win64 Folder | Build Script |
 |----------|--------------|--------------|
-| **Standard UDK** (Epic download) | ❌ No | `Build.bat` |
-| **Custom 64-bit UDK** | ✅ Yes | `Build_Both.bat` |
-| **UE3 Source License** | ✅ Yes | `Build_Both.bat` |
+| **Standard UDK** (Epic download) | No | `Build.bat` |
+| **Custom 64-bit UDK** | Yes | `Build_Both.bat` |
+| **UE3 Source License** | Yes | `Build_Both.bat` |
 
 ---
 
@@ -66,10 +66,10 @@ Test-Path "D:\UDK\Custom\Binaries\Win64"
 ### Configurations
 
 **FBXExportModule_x64.vcxproj** includes:
-- ✅ Debug | Win32
-- ✅ Release | Win32
-- ✅ Debug | x64
-- ✅ Release | x64
+- Debug | Win32
+- Release | Win32
+- Debug | x64
+- Release | x64
 
 ### Preprocessor Defines
 
@@ -78,8 +78,8 @@ Test-Path "D:\UDK\Custom\Binaries\Win64"
 
 ### Library Paths
 
-- Win32: `D:\UDK\Custom\Binaries\Win32` → Core.lib, Engine.lib, UnrealEd.lib
-- x64: `D:\UDK\Custom\Binaries\Win64` → Core.lib, Engine.lib, UnrealEd.lib
+- Win32: `D:\UDK\Custom\Binaries\Win32` -> Core.lib, Engine.lib, UnrealEd.lib
+- x64: `D:\UDK\Custom\Binaries\Win64` -> Core.lib, Engine.lib, UnrealEd.lib
 
 ---
 
@@ -87,20 +87,20 @@ Test-Path "D:\UDK\Custom\Binaries\Win64"
 
 ### Build_Both.bat Capabilities
 
-✅ **Auto-detects Visual Studio** (2010-2022)  
-✅ **Checks for 64-bit UDK** support  
-✅ **Builds both platforms** (or skips x64 if not supported)  
-✅ **Auto-deploys DLLs** to correct folders  
-✅ **Clear error messages** and warnings  
-✅ **Flexible usage**: `Build_Both.bat`, `Build_Both.bat Win32`, `Build_Both.bat x64`
+**Auto-detects Visual Studio** (2010-2022)
+**Checks for 64-bit UDK** support
+**Builds both platforms** (or skips x64 if not supported)
+**Auto-deploys DLLs** to correct folders
+**Clear error messages** and warnings
+**Flexible usage**: `Build_Both.bat`, `Build_Both.bat Win32`, `Build_Both.bat x64`
 
 ### Smart Detection
 
 The script will:
-- ✅ Build Win32 (always works)
-- ✅ Check if `Binaries\Win64` exists
-- ✅ Build x64 only if supported
-- ✅ Show friendly message if x64 not available
+- Build Win32 (always works)
+- Check if `Binaries\Win64` exists
+- Build x64 only if supported
+- Show friendly message if x64 not available
 
 ---
 
@@ -127,15 +127,15 @@ cd D:\UDK\Custom\Binaries\Win64
 ## When to Use 64-bit
 
 ### Use Win32 (32-bit) If:
-- ✅ Standard UDK installation
-- ✅ Small to medium meshes (< 50K triangles)
-- ✅ Memory is not an issue
+- Standard UDK installation
+- Small to medium meshes (< 50K triangles)
+- Memory is not an issue
 
 ### Use x64 (64-bit) If:
-- ✅ Custom UDK with 64-bit support
-- ✅ Large meshes (> 100K triangles)
-- ✅ Batch exporting many assets
-- ✅ Need > 2GB memory
+- Custom UDK with 64-bit support
+- Large meshes (> 100K triangles)
+- Batch exporting many assets
+- Need > 2GB memory
 
 ---
 
@@ -157,19 +157,19 @@ cd D:\UDK\Custom\Binaries\Win64
 
 | Version | Win32 | x64 | Notes |
 |---------|-------|-----|-------|
-| VS 2010 | ✅ | ✅ | Best compatibility (UDK's native) |
-| VS 2012 | ✅ | ✅ | Recommended |
-| VS 2013-2019 | ✅ | ✅ | Should work |
-| VS 2022 | ✅ | ✅ | Likely works (test first) |
+| VS 2010 | Yes | Yes | Best compatibility (UDK's native) |
+| VS 2012 | Yes | Yes | Recommended |
+| VS 2013-2019 | Yes | Yes | Should work |
+| VS 2022 | Yes | Yes | Likely works (test first) |
 
 ### UDK Versions
 
 | UDK Version | Win32 | x64 |
 |-------------|-------|-----|
-| UDK 2009-2012 | ✅ | ❌ |
-| UDK 2013-2015 | ✅ | ⚠️ (some builds) |
-| Custom UDK | ✅ | ✅ (if compiled) |
-| UE3 License | ✅ | ✅ |
+| UDK 2009-2012 | Yes | No |
+| UDK 2013-2015 | Yes | Partial (some builds) |
+| Custom UDK | Yes | Yes (if compiled) |
+| UE3 License | Yes | Yes |
 
 ---
 
@@ -193,7 +193,7 @@ Your UDK doesn't have 64-bit libraries. Options:
 
 **ABI mismatch.** Try:
 1. Visual Studio 2010/2012 (matches UDK)
-2. Verify platform (Win32 DLL → Win32 folder, x64 DLL → Win64 folder)
+2. Verify platform (Win32 DLL -> Win32 folder, x64 DLL -> Win64 folder)
 3. Check DLL is in correct location
 
 ---
@@ -227,23 +227,23 @@ FBXExportModule/
 ```
 
 This will:
-- ✅ Rebuild Win32 (ensure latest)
-- ✅ Build x64 (if supported)
-- ✅ Deploy both DLLs
+- Rebuild Win32 (ensure latest)
+- Build x64 (if supported)
+- Deploy both DLLs
 
 ---
 
 ## Summary
 
 ### For Standard UDK Users:
-- ✅ Keep using `Build.bat` and `FBXExportModule.vcxproj`
-- ✅ Win32 is all you need
-- ✅ Nothing changed for you!
+- Keep using `Build.bat` and `FBXExportModule.vcxproj`
+- Win32 is all you need
+- Nothing changed for you!
 
 ### For Custom UDK Users:
-- 🎉 Now you can build x64 too!
-- 🎉 Use `Build_Both.bat` for both platforms
-- 🎉 Better performance for large assets
+- Now you can build x64 too!
+- Use `Build_Both.bat` for both platforms
+- Better performance for large assets
 
 ---
 
@@ -255,12 +255,12 @@ This will:
 
 ---
 
-## Status: ✅ READY TO USE
+## Status: READY TO USE
 
 Both 32-bit and 64-bit support are fully implemented and tested!
 
 **Choose your build:**
-- Standard UDK → `.\Build.bat`
-- 64-bit UDK → `.\Build_Both.bat`
+- Standard UDK -> `.\Build.bat`
+- 64-bit UDK -> `.\Build_Both.bat`
 
-🎉 **Happy exporting!** 🎉
+**Happy exporting!**

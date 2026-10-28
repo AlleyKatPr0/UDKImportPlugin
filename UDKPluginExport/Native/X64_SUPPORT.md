@@ -17,8 +17,8 @@ The FBXExportModule now supports both **32-bit (Win32)** and **64-bit (x64)** pl
 D:\UDK\Custom\Binaries\Win64
 ```
 
-- ❌ **No Win64 folder** → You have standard UDK (32-bit only)
-- ✅ **Win64 folder exists** → You have 64-bit support!
+- **No Win64 folder** -> You have standard UDK (32-bit only)
+- **Win64 folder exists** -> You have 64-bit support!
 
 ### Who Needs 64-bit?
 
@@ -49,22 +49,22 @@ cd D:\UDK\Custom\Development\Src\UDKPluginExport\Native\FBXExportModule
 ```
 
 The script will:
-- ✅ Auto-detect Visual Studio
-- ✅ Build both platforms
-- ✅ Copy DLLs to correct folders
-- ✅ Warn if x64 is not supported
-- ✅ Show clear next steps
+- Auto-detect Visual Studio
+- Build both platforms
+- Copy DLLs to correct folders
+- Warn if x64 is not supported
+- Show clear next steps
 
 ### Option 2: Manual Build
 
 #### Using Visual Studio GUI:
 
 1. Open `FBXExportModule_x64.vcxproj` in Visual Studio
-2. Select **Release | Win32** → Build
-3. Select **Release | x64** → Build
+2. Select **Release | Win32** -> Build
+3. Select **Release | x64** -> Build
 4. Copy DLLs:
-   - `Release\FBXExportModule.dll` → `D:\UDK\Custom\Binaries\Win32\`
-   - `x64\Release\FBXExportModule.dll` → `D:\UDK\Custom\Binaries\Win64\`
+   - `Release\FBXExportModule.dll` -> `D:\UDK\Custom\Binaries\Win32\`
+   - `x64\Release\FBXExportModule.dll` -> `D:\UDK\Custom\Binaries\Win64\`
 
 #### Using Command Line:
 
@@ -89,8 +89,8 @@ msbuild FBXExportModule_x64.vcxproj /p:Configuration=Release /p:Platform=x64
 - **`Build_Both.bat`** - Multi-platform build script
 
 **Choose one:**
-- Standard UDK → Use original files
-- 64-bit UDK → Use `_x64` versions
+- Standard UDK -> Use original files
+- 64-bit UDK -> Use `_x64` versions
 
 ---
 
@@ -100,22 +100,22 @@ msbuild FBXExportModule_x64.vcxproj /p:Configuration=Release /p:Platform=x64
 
 | Platform | Define |
 |----------|--------|
-| Win32    | `WIN32` |
-| x64      | `WIN64` |
+| Win32 | `WIN32` |
+| x64 | `WIN64` |
 
 ### Library Paths
 
 | Platform | Path |
 |----------|------|
-| Win32    | `D:\UDK\Custom\Binaries\Win32` |
-| x64      | `D:\UDK\Custom\Binaries\Win64` |
+| Win32 | `D:\UDK\Custom\Binaries\Win32` |
+| x64 | `D:\UDK\Custom\Binaries\Win64` |
 
 ### Pointer Size
 
 | Platform | Size |
 |----------|------|
-| Win32    | 4 bytes (32-bit pointers) |
-| x64      | 8 bytes (64-bit pointers) |
+| Win32 | 4 bytes (32-bit pointers) |
+| x64 | 8 bytes (64-bit pointers) |
 
 ### UDK Headers
 
@@ -223,9 +223,9 @@ Fall back to VS 2010/2012 for guaranteed compatibility.
 | **Compatibility** | Universal | Requires 64-bit UDK |
 
 **Recommendation:**
-- Small/medium meshes → Win32 is fine
-- Large meshes (>100K tris) → x64 helps
-- Standard UDK → Win32 only option
+- Small/medium meshes -> Win32 is fine
+- Large meshes (>100K tris) -> x64 helps
+- Standard UDK -> Win32 only option
 
 ---
 
@@ -235,24 +235,24 @@ Fall back to VS 2010/2012 for guaranteed compatibility.
 
 ```
 Building Win32 (32-bit)
-✓ Build succeeded
-✓ Deployed: D:\UDK\Custom\Binaries\Win32\FBXExportModule.dll
+Build succeeded
+Deployed: D:\UDK\Custom\Binaries\Win32\FBXExportModule.dll
 
 Building x64 (64-bit)
-✓ Build succeeded
-✓ Deployed: D:\UDK\Custom\Binaries\Win64\FBXExportModule.dll
+Build succeeded
+Deployed: D:\UDK\Custom\Binaries\Win64\FBXExportModule.dll
 ```
 
 ### Standard UDK (No x64 Support)
 
 ```
 Building Win32 (32-bit)
-✓ Build succeeded
-✓ Deployed: D:\UDK\Custom\Binaries\Win32\FBXExportModule.dll
+Build succeeded
+Deployed: D:\UDK\Custom\Binaries\Win32\FBXExportModule.dll
 
 Building x64 (64-bit)
-⚠ NOTICE: No 64-bit UDK Detected
-⚠ Skipping x64 build (standard UDK is 32-bit only)
+NOTICE: No 64-bit UDK Detected
+WARNING: Skipping x64 build (standard UDK is 32-bit only)
 ```
 
 ---
@@ -260,14 +260,14 @@ Building x64 (64-bit)
 ## Summary
 
 ### Standard UDK Users (Most People)
-- ✅ Use `Build.bat` or `FBXExportModule.vcxproj`
-- ✅ Win32 version is all you need
-- ✅ Works perfectly for all assets
+- Use `Build.bat` or `FBXExportModule.vcxproj`
+- Win32 version is all you need
+- Works perfectly for all assets
 
 ### Custom/64-bit UDK Users
-- ✅ Use `Build_Both.bat` or `FBXExportModule_x64.vcxproj`
-- ✅ Build both Win32 and x64
-- ✅ Get performance benefits for large assets
+- Use `Build_Both.bat` or `FBXExportModule_x64.vcxproj`
+- Build both Win32 and x64
+- Get performance benefits for large assets
 
 ---
 
@@ -283,7 +283,7 @@ Building x64 (64-bit)
 
 Still not sure? **Check if you have `D:\UDK\Custom\Binaries\Win64`:**
 
-- **No** → Use Win32-only files
-- **Yes** → Use x64 files for both platforms
+- **No** -> Use Win32-only files
+- **Yes** -> Use x64 files for both platforms
 
-**When in doubt, just run `Build_Both.bat` - it will figure it out! 🎯**
+**When in doubt, just run `Build_Both.bat` - it will figure it out! **

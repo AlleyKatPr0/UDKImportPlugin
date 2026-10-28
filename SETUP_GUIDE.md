@@ -8,11 +8,11 @@ This guide is specifically tailored for your UDK installation at `D:\UDK\Custom`
 
 You now have **5 powerful UDK commandlets** + **1 native C++ FBX exporter**:
 
-1. ✅ **ValidateExportReadinessCommandlet** - Check assets before export
-2. ✅ **DiscoverPackageCommandlet** - List all assets in packages
-3. ✅ **ExportStaticMeshMaterialsCommandlet** - Get detailed mesh info
-4. ⭐ **NativeFBXExportCommandlet** - Reliable FBX export (C++ DLL)
-5. ⚠️ **BatchExportStaticMeshFBXCommandlet** - Experimental (UnrealScript only)
+1. **ValidateExportReadinessCommandlet** - Check assets before export
+2. **DiscoverPackageCommandlet** - List all assets in packages
+3. **ExportStaticMeshMaterialsCommandlet** - Get detailed mesh info
+4. **NativeFBXExportCommandlet** - Reliable FBX export (C++ DLL)
+5. **BatchExportStaticMeshFBXCommandlet** - Experimental (UnrealScript only; deprecated)
 
 ---
 
@@ -252,7 +252,7 @@ cd D:\UDK\Custom\Development\Src\UDKPluginExport\Native\FBXExportModule
 D:\UDK\Custom\
 ├── Binaries\Win32\
 │   ├── UDK.exe
-│   ├── FBXExportModule.dll  ← Native DLL (if built)
+│   ├── FBXExportModule.dll  <- Native DLL (if built)
 │   └── ...
 ├── Development\Src\
 │   └── UDKPluginExport\
@@ -270,17 +270,17 @@ D:\UDK\Custom\
 │               ├── Build.bat
 │               └── README.md
 └── UDKGame\Config\
-    └── DefaultEngineUDK.ini  ← Contains ModEditPackages=UDKPluginExport
+    └── DefaultEngineUDK.ini  <- Contains ModEditPackages=UDKPluginExport
 ```
 
 ---
 
 ## Next Steps
 
-1. ✅ **Test all commandlets** with your actual UDK content
-2. ✅ **Export some FBX files** using the native exporter
-3. ✅ **Import into UE4/5** using the main UDK Import Plugin
-4. 🎯 **Automate your workflow** with batch scripts
+1. **Test all commandlets** with your actual UDK content
+2. **Export some FBX files** using the native exporter
+3. **Import into UE4/5** using the main UDK Import Plugin
+4. **Automate your workflow** with batch scripts
 
 ---
 
@@ -293,7 +293,7 @@ cd D:\UDK\Custom\Binaries\Win32
 # Discover assets
 .\UDK.exe DiscoverPackageCommandlet <PackageName>
 
-# Validate assets  
+# Validate assets
 .\UDK.exe ValidateExportReadinessCommandlet <Package.Asset>
 
 # Get mesh details
@@ -308,7 +308,7 @@ cd D:\UDK\Custom\Binaries\Win32
 
 ---
 
-**Ready? Start with Phase 1, then optionally add Phase 2 for FBX export!** 🚀
+**Ready? Start with Phase 1, then optionally add Phase 2 for FBX export!**
 
 For detailed documentation:
 - `Native/QUICKSTART.md` - Fast native FBX setup

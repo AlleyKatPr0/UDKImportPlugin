@@ -199,13 +199,13 @@ Failed: 0
 
 ## Advantages Over UnrealScript Approach
 
-✅ **Direct API Access**: Calls native `StaticMeshExporterFBX` directly  
-✅ **Binary FBX Output**: Produces proper binary FBX files  
-✅ **No UDK Bugs**: Bypasses the broken `batchexport` commandlet  
-✅ **Full Control**: Can set export parameters precisely  
-✅ **Reliable**: Works with complex meshes that fail with UnrealScript  
-✅ **Fast**: Native C++ performance  
-✅ **Detailed Logging**: Reports vertex counts, LOD info, file sizes  
+**Direct API Access**: Calls native `StaticMeshExporterFBX` directly
+**Binary FBX Output**: Produces proper binary FBX files
+**No UDK Bugs**: Bypasses the broken `batchexport` commandlet
+**Full Control**: Can set export parameters precisely
+**Reliable**: Works with complex meshes that fail with UnrealScript
+**Fast**: Native C++ performance
+**Detailed Logging**: Reports vertex counts, LOD info, file sizes
 
 ---
 
@@ -318,8 +318,8 @@ Potential improvements:
 
 ## Credits
 
-**Author**: AlleyKatPr0  
-**Based on**: UDK Import Plugin by Vincent (Speedy37) Rouille  
+**Author**: AlleyKatPr0
+**Based on**: UDK Import Plugin by Vincent (Speedy37) Rouille
 **Repository**: https://github.com/AlleyKatPr0/UDKImportPlugin
 
 ---

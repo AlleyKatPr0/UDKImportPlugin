@@ -18,12 +18,12 @@ Key features
 
 Known limitations
 - Brush CSG order is not preserved; manual reordering of brushes is usually required.
-- UDK batch FBX export is unreliable; the plugin exports OBJ by default. Convert OBJ→FBX externally (Autodesk FBX Converter 2013 (32-bit) recommended) or export FBX manually from the UDK Content Browser.
+- UDK batch FBX export is unreliable; the plugin exports OBJ by default. Convert OBJ->FBX externally (Autodesk FBX Converter 2013 (32-bit) recommended) or export FBX manually from the UDK Content Browser.
 - Some complex map constructs or custom UDK-only features may not import cleanly.
 
 Prerequisites
 - Unreal Engine 4.27 - 5.7+ project.
-- If you rely on automated OBJ→FBX conversion: Autodesk FBX Converter 2013 (32-bit).
+- If you rely on automated OBJ->FBX conversion: Autodesk FBX Converter 2013 (32-bit).
 - UDK installation with Development/Make support to build commandlets (if you will use provided UDK commandlets).
 
 UDK commandlet integration (recommended)
@@ -52,10 +52,10 @@ Note: Manual FBX export via the Content Browser is generally more reliable.
 Plugin installation (UE project)
 1. Create MyProject/Plugins if missing.
 2. Clone or copy this repo into: MyProject/Plugins/UDKImportPlugin
-3. Regenerate project files: Right‑click .uproject → Generate Visual Studio project files.
+3. Regenerate project files: Right‑click .uproject -> Generate Visual Studio project files.
 4. Open the project; the editor will build the plugin.
-5. Enable: Edit → Plugins → Import → UDK Import Plugin. Restart the editor.
-6. Access: Help → UDK Import or Project Settings → Plugins → UDK Import Plugin.
+5. Enable: Edit -> Plugins -> Import -> UDK Import Plugin. Restart the editor.
+6. Access: Help -> UDK Import or Project Settings -> Plugins -> UDK Import Plugin.
 
 Typical import workflow
 1. Configure plugin

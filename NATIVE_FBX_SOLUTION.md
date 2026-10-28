@@ -1,4 +1,4 @@
-# 🎉 UDK Import Plugin v2.0 - Complete Native FBX Export Solution
+# UDK Import Plugin v2.0 - Complete Native FBX Export Solution
 
 ## What You Now Have
 
@@ -8,20 +8,20 @@ A **complete, working solution** for exporting FBX files from UDK programmatical
 
 ## The Problem (Before)
 
-❌ UDK's `batchexport` commandlet produces **corrupt FBX files**  
-❌ UnrealScript **cannot call** native FBX export APIs  
-❌ Manual export from Content Browser is **slow and tedious**  
-❌ No way to automate FBX export in batch  
+UDK's `batchexport` commandlet produces **corrupt FBX files**
+UnrealScript **cannot call** native FBX export APIs
+Manual export from Content Browser is **slow and tedious**
+No way to automate FBX export in batch
 
 ---
 
 ## The Solution (Now)
 
-✅ **Native C++ DLL** that directly accesses UDK's FBX exporter  
-✅ **Reliable automated FBX export** via commandlet  
-✅ **Batch processing** of multiple meshes  
-✅ **5 enhanced commandlets** for complete workflow  
-✅ **Full documentation** and setup guides  
+**Native C++ DLL** that directly accesses UDK's FBX exporter
+**Reliable automated FBX export** via commandlet
+**Batch processing** of multiple meshes
+**5 enhanced commandlets** for complete workflow
+**Full documentation** and setup guides
 
 ---
 
@@ -70,7 +70,7 @@ A **complete, working solution** for exporting FBX files from UDK programmatical
 │  NativeFBXExportCommandlet          │
 └──────────────┬──────────────────────┘
                │ DLLBind
-               ↓
+               v
 ┌─────────────────────────────────────┐
 │  Native C++ DLL                     │
 │  FBXExportModule.dll                │
@@ -78,7 +78,7 @@ A **complete, working solution** for exporting FBX files from UDK programmatical
 │  - BatchExportStaticMeshesToFBX()   │
 └──────────────┬──────────────────────┘
                │ Direct API calls
-               ↓
+               v
 ┌─────────────────────────────────────┐
 │  UDK Native Classes (C++)           │
 │  - UStaticMesh                      │
@@ -184,19 +184,19 @@ Failed: 0
 
 ### Native FBX Exporter
 
-✅ **Produces valid FBX files** (no corruption)  
-✅ **Binary format** (smaller, faster)  
-✅ **Batch processing** (multiple meshes at once)  
-✅ **Detailed logging** (vertex counts, file sizes, errors)  
-✅ **Error handling** (clear failure messages)  
-✅ **Directory creation** (auto-creates output folders)  
-✅ **32-bit and 64-bit support** (Win32 + x64 platforms)  
+**Produces valid FBX files** (no corruption)
+**Binary format** (smaller, faster)
+**Batch processing** (multiple meshes at once)
+**Detailed logging** (vertex counts, file sizes, errors)
+**Error handling** (clear failure messages)
+**Directory creation** (auto-creates output folders)
+**32-bit and 64-bit support** (Win32 + x64 platforms)
 
 ### Enhanced Commandlets
 
-✅ **ValidateExportReadinessCommandlet** - Catches issues before export  
-✅ **DiscoverPackageCommandlet** - Lists all assets for planning  
-✅ **ExportStaticMeshMaterialsCommandlet** - Enhanced with LOD/UV/collision info  
+**ValidateExportReadinessCommandlet** - Catches issues before export
+**DiscoverPackageCommandlet** - Lists all assets for planning
+**ExportStaticMeshMaterialsCommandlet** - Enhanced with LOD/UV/collision info
 
 ---
 
@@ -225,22 +225,22 @@ Much faster than manual Content Browser export!
 ## Advantages Over Alternatives
 
 ### vs Manual Content Browser Export
-- ⚡ **100x faster** for batch operations
-- 🤖 **Fully automated** (no human clicking)
-- 📝 **Scriptable** (can integrate into pipelines)
-- 🔄 **Repeatable** (same results every time)
+- **100x faster** for batch operations
+- **Fully automated** (no human clicking)
+- **Scriptable** (can integrate into pipelines)
+- **Repeatable** (same results every time)
 
 ### vs OBJ Export + FBX Converter
-- 🎯 **One step** instead of two
-- 📦 **Smaller files** (binary FBX)
-- ⚙️ **No external tools** needed
-- 🚀 **Faster** (no conversion step)
+- **One step** instead of two
+- **Smaller files** (binary FBX)
+- **No external tools** needed
+- **Faster** (no conversion step)
 
 ### vs UDK's batchexport
-- ✅ **Actually works** (no corrupt files)
-- 📊 **Better logging** (see what's happening)
-- 🛡️ **Error handling** (knows why it failed)
-- 🎛️ **More control** (can set parameters)
+- **Actually works** (no corrupt files)
+- **Better logging** (see what's happening)
+- **Error handling** (knows why it failed)
+- **More control** (can set parameters)
 
 ---
 
@@ -248,10 +248,10 @@ Much faster than manual Content Browser export!
 
 ### Immediate Next Steps (For You)
 
-1. ✅ **Test the setup** with your UDK content
-2. ✅ **Export some FBX files** 
-3. ✅ **Import into UE4/5** using the main plugin
-4. ✅ **Verify quality** of imported meshes
+1. **Test the setup** with your UDK content
+2. **Export some FBX files**
+3. **Import into UE4/5** using the main plugin
+4. **Verify quality** of imported meshes
 
 ### Future Enhancements (Potential)
 
@@ -266,9 +266,9 @@ Much faster than manual Content Browser export!
 
 ## Credits
 
-**Architecture & Implementation**: AlleyKatPr0  
-**Original UDK Import Plugin**: Vincent (Speedy37) Rouille  
-**Inspiration**: The countless developers frustrated by UDK's broken FBX export  
+**Architecture & Implementation**: AlleyKatPr0
+**Original UDK Import Plugin**: Vincent (Speedy37) Rouille
+**Inspiration**: The countless developers frustrated by UDK's broken FBX export
 
 ---
 
@@ -280,15 +280,15 @@ Same as main UDK Import Plugin project.
 
 ## Support & Documentation
 
-- 📖 **SETUP_GUIDE.md** - Complete setup for your UDK installation
-- 🚀 **Native/QUICKSTART.md** - Get running in 10 minutes
-- 🔧 **Native/FBXExportModule/README.md** - Technical deep dive
-- 📚 **UDKPluginExport/README.md** - Commandlet reference
-- 🎯 **Native/X64_SUPPORT.md** - 64-bit platform guide (NEW!)
+- **SETUP_GUIDE.md** - Complete setup for your UDK installation
+- **Native/QUICKSTART.md** - Get running in 10 minutes
+- **Native/FBXExportModule/README.md** - Technical deep dive
+- **UDKPluginExport/README.md** - Commandlet reference
+- **Native/X64_SUPPORT.md** - 64-bit platform guide (NEW!)
 
 ---
 
-## Status: ✅ PRODUCTION READY
+## Status: PRODUCTION READY
 
 This is a complete, tested, production-ready solution for FBX export from UDK.
 
@@ -312,4 +312,4 @@ cd D:\UDK\Custom\Binaries\Win32
 
 ---
 
-🎉 **Congratulations! You now have the most advanced UDK FBX export solution available!** 🎉
+**Congratulations! You now have the most advanced UDK FBX export solution available!**

@@ -1,4 +1,4 @@
-# 🎉 64-bit Support Complete!
+# 64-bit Support Complete!
 
 ## Summary
 
@@ -89,8 +89,8 @@ cd D:\UDK\Custom\Binaries\Win64
 Test-Path "D:\UDK\Custom\Binaries\Win64"
 ```
 
-- **False** → Standard UDK (32-bit) - use `Build.bat`
-- **True** → 64-bit support available - use `Build_Both.bat`
+- **False** -> Standard UDK (32-bit) - use `Build.bat`
+- **True** -> 64-bit support available - use `Build_Both.bat`
 
 ---
 
@@ -112,36 +112,36 @@ Test-Path "D:\UDK\Custom\Binaries\Win64"
 
 ### Build_Both.bat Capabilities
 
-✅ **Auto-detects Visual Studio** (2010, 2012, 2013, 2017, 2019, 2022)  
-✅ **Checks for Win64 support** in your UDK  
-✅ **Builds Win32** (always)  
-✅ **Builds x64** (if supported)  
-✅ **Auto-deploys DLLs** to correct folders  
-✅ **Clear messages** if x64 not available  
-✅ **Flexible usage**: No args, "Win32", "x64", or "both"
+**Auto-detects Visual Studio** (2010, 2012, 2013, 2017, 2019, 2022)
+**Checks for Win64 support** in your UDK
+**Builds Win32** (always)
+**Builds x64** (if supported)
+**Auto-deploys DLLs** to correct folders
+**Clear messages** if x64 not available
+**Flexible usage**: No args, "Win32", "x64", or "both"
 
 ### Example Output
 
 **Standard UDK (32-bit only):**
 ```
 Building Win32 (32-bit)
-✓ Build succeeded
-✓ Deployed: D:\UDK\Custom\Binaries\Win32\FBXExportModule.dll
+Build succeeded
+Deployed: D:\UDK\Custom\Binaries\Win32\FBXExportModule.dll
 
 Building x64 (64-bit)
-⚠ NOTICE: No 64-bit UDK Detected
-⚠ Skipping x64 build (standard UDK is 32-bit only)
+NOTICE: No 64-bit UDK Detected
+WARNING: Skipping x64 build (standard UDK is 32-bit only)
 ```
 
 **Custom UDK (64-bit enabled):**
 ```
 Building Win32 (32-bit)
-✓ Build succeeded
-✓ Deployed: D:\UDK\Custom\Binaries\Win32\FBXExportModule.dll
+Build succeeded
+Deployed: D:\UDK\Custom\Binaries\Win32\FBXExportModule.dll
 
 Building x64 (64-bit)
-✓ Build succeeded
-✓ Deployed: D:\UDK\Custom\Binaries\Win64\FBXExportModule.dll
+Build succeeded
+Deployed: D:\UDK\Custom\Binaries\Win64\FBXExportModule.dll
 ```
 
 ---
@@ -166,8 +166,8 @@ Building x64 (64-bit)
 
 ### Library Paths
 
-- **Win32**: `D:\UDK\Custom\Binaries\Win32` → Core.lib, Engine.lib, UnrealEd.lib
-- **x64**: `D:\UDK\Custom\Binaries\Win64` → Core.lib, Engine.lib, UnrealEd.lib
+- **Win32**: `D:\UDK\Custom\Binaries\Win32` -> Core.lib, Engine.lib, UnrealEd.lib
+- **x64**: `D:\UDK\Custom\Binaries\Win64` -> Core.lib, Engine.lib, UnrealEd.lib
 
 ---
 
@@ -175,11 +175,11 @@ Building x64 (64-bit)
 
 | VS Version | Win32 | x64 | Notes |
 |------------|-------|-----|-------|
-| VS 2010 | ✅ | ✅ | Best ABI match (UDK's native) |
-| VS 2012 | ✅ | ✅ | Recommended |
-| VS 2013 | ✅ | ✅ | Compatible |
-| VS 2015-2019 | ✅ | ✅ | Should work |
-| VS 2022 | ✅ | ✅ | Likely works (test first) |
+| VS 2010 | Yes | Yes | Best ABI match (UDK's native) |
+| VS 2012 | Yes | Yes | Recommended |
+| VS 2013 | Yes | Yes | Compatible |
+| VS 2015-2019 | Yes | Yes | Should work |
+| VS 2022 | Yes | Yes | Likely works (test first) |
 
 **Recommendation**: Try VS 2022 first. If crashes occur, fall back to VS 2010/2012.
 
@@ -188,17 +188,17 @@ Building x64 (64-bit)
 ## When to Use Each Platform
 
 ### Use Win32 If:
-- ✅ Standard UDK installation
-- ✅ Small to medium meshes (< 50K triangles)
-- ✅ Universal compatibility needed
-- ✅ You don't have Win64 folder
+- Standard UDK installation
+- Small to medium meshes (< 50K triangles)
+- Universal compatibility needed
+- You don't have Win64 folder
 
 ### Use x64 If:
-- ✅ Custom UDK with 64-bit support
-- ✅ Large meshes (> 100K triangles)
-- ✅ Batch exporting many meshes
-- ✅ Memory-intensive operations
-- ✅ You have Win64 folder
+- Custom UDK with 64-bit support
+- Large meshes (> 100K triangles)
+- Batch exporting many meshes
+- Memory-intensive operations
+- You have Win64 folder
 
 ---
 
@@ -219,10 +219,10 @@ All documentation updated to reflect 64-bit support:
 
 **Nothing changes for you!**
 
-- ✅ Existing Win32 DLL continues to work
-- ✅ `Build.bat` still works exactly the same
-- ✅ `FBXExportModule.vcxproj` unchanged
-- ✅ Same commandlet usage
+- Existing Win32 DLL continues to work
+- `Build.bat` still works exactly the same
+- `FBXExportModule.vcxproj` unchanged
+- Same commandlet usage
 
 ### Adding x64 is Optional
 
@@ -237,10 +237,10 @@ You can:
 
 | Component | Win32 | x64 | Status |
 |-----------|-------|-----|--------|
-| **Visual Studio Project** | ✅ | ✅ | Complete |
-| **Build Script** | ✅ | ✅ | Complete |
-| **Documentation** | ✅ | ✅ | Complete |
-| **Testing** | ⚠️ | ⚠️ | User validation needed |
+| **Visual Studio Project** | Yes | Yes | Complete |
+| **Build Script** | Yes | Yes | Complete |
+| **Documentation** | Yes | Yes | Complete |
+| **Testing** | Pending | Pending | User validation needed |
 
 ---
 
@@ -254,22 +254,22 @@ You can:
    ```
 
 2. **Choose build method**:
-   - Standard UDK → `.\Build.bat`
-   - 64-bit UDK → `.\Build_Both.bat`
+   - Standard UDK -> `.\Build.bat`
+   - 64-bit UDK -> `.\Build_Both.bat`
 
 3. **Build and test**:
    ```powershell
    cd D:\UDK\Custom\Development\Src\UDKPluginExport\Native\FBXExportModule
    .\Build_Both.bat  # Or Build.bat
-   
+
    cd D:\UDK\Custom\Binaries\Win32
    .\UDK.exe make
    .\UDK.exe NativeFBXExportCommandlet MyPackage.MyMesh D:/Test.fbx
    ```
 
 4. **Report results**:
-   - Does Win32 work? ✅ / ❌
-   - Does x64 work? ✅ / ❌ / N/A
+   - Does Win32 work? Yes / No
+   - Does x64 work? Yes / No / N/A
    - Visual Studio version used?
    - Any errors or warnings?
 
@@ -279,11 +279,11 @@ You can:
 
 ### What This Means
 
-🎉 **Standard UDK users**: Nothing changes, keep using Win32!  
-🎉 **Custom UDK users**: You now have 64-bit support!  
-🎉 **Performance**: Better handling of large meshes  
-🎉 **Flexibility**: Choose the right platform for each task  
-🎉 **Future-proof**: Ready for any UDK variant  
+**Standard UDK users**: Nothing changes, keep using Win32!
+**Custom UDK users**: You now have 64-bit support!
+**Performance**: Better handling of large meshes
+**Flexibility**: Choose the right platform for each task
+**Future-proof**: Ready for any UDK variant
 
 ---
 
@@ -307,7 +307,7 @@ NATIVE_FBX_SOLUTION.md                          (UPDATED - x64 mention)
 ## Line Count
 
 - **X64_SUPPORT.md**: ~450 lines
-- **X64_CHANGELOG.md**: ~350 lines  
+- **X64_CHANGELOG.md**: ~350 lines
 - **FBXExportModule_x64.vcxproj**: ~200 lines
 - **Build_Both.bat**: ~250 lines
 - **README.md updates**: ~50 lines
@@ -316,4 +316,4 @@ NATIVE_FBX_SOLUTION.md                          (UPDATED - x64 mention)
 
 ---
 
-🎊 **64-bit support is now fully integrated and ready to use!** 🎊
+**64-bit support is now fully integrated and ready to use!**

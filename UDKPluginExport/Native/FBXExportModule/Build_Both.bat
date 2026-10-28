@@ -264,11 +264,11 @@ echo Status: SUCCESS
 echo.
 
 if %WIN32_BUILT%==1 (
-    echo [✓] Win32 DLL built and deployed
+    echo [OK] Win32 DLL built and deployed
 )
 
 if %X64_BUILT%==1 (
-    echo [✓] x64 DLL built and deployed
+    echo [OK] x64 DLL built and deployed
 )
 
 echo.
